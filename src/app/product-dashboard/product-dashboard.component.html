@@ -1,0 +1,160 @@
+<nav class="navbar sticky-top navbar-light bg-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Angular CRUD</a>
+        <form class="d-flex"> 
+            <input type="text" class="forms-control" placeholder="Buscar" [(ngModel)]="filterTable" name="filterTable" />          
+            <select [(ngModel)]="filterTable" name="filterTable" class="form-select form-select-sm mx-3" aria-label=".form-select-sm example">
+                <option value="">Todas las categorias</option>
+                <option value="fritos">Fritos</option>
+                <option value="galletas">Galletas</option>
+                <option value="pastel">Pastel</option>
+            </select>
+            <button type="button" class="btn btn-success btn-sm mx-3"  (click)="clicAddProduct()"data-bs-toggle="modal"
+                data-bs-target="#añadirProducto">Añadir Producto</button>
+        </form>
+    </div>
+</nav>
+<!-- Modal Añadir Producto -->
+<div class="modal fade" id="añadirProducto" tabindex="-1" aria-labelledby="añadirProductoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="añadirProductoLabel">Detalles del Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formValue">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faShoppingBag"></fa-icon>
+                        </span>
+                        <input type="text" formControlName="nombre" name="nombre" class="form-control" placeholder="Producto"
+                            aria-label="Producto" aria-describedby="basic-addon1" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faTag"></fa-icon>
+                        </span>
+                        <select formControlName="categoria" name="categoria" class="form-select" aria-label="Default select example">
+                            <option value="fritos">Fritos</option>
+                            <option value="galletas">Galletas</option>
+                            <option value="pastel">Pastel</option>
+                          </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faCandyCane"></fa-icon>
+                        </span>
+                        <input type="text" formControlName="sabor" name="sabor" class="form-control" placeholder="Sabor"
+                            aria-label="Sabor" aria-describedby="basic-addon1" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faDollarSign"></fa-icon>
+                        </span>
+                        <input type="number" formControlName="precio" name="precio" class="form-control" placeholder="Precio"
+                            aria-label="Precio" aria-describedby="basic-addon1" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cerrar" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" (click)="postProductDetails()" class="btn btn-primary">Añadir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Editar Producto -->
+<div class="modal fade" id="editarProducto" tabindex="-1" aria-labelledby="editarProductoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarProductoLabel">Editar Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formValue">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faShoppingBag"></fa-icon>
+                        </span>
+                        <input type="text" formControlName="nombre" name="nombre" class="form-control" placeholder="Producto"
+                            aria-label="Producto" aria-describedby="basic-addon1" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faTag"></fa-icon>
+                        </span>
+                        <select formControlName="categoria" name="categoria" class="form-select" aria-label="Default select example">
+                            <option value="fritos">Fritos</option>
+                            <option value="galletas">Galletas</option>
+                            <option value="pastel">Pastel</option>
+                          </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faCandyCane"></fa-icon>
+                        </span>
+                        <input type="text" formControlName="sabor" name="sabor" class="form-control" placeholder="Sabor"
+                            aria-label="Sabor" aria-describedby="basic-addon1" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faDollarSign"></fa-icon>
+                        </span>
+                        <input type="number" formControlName="precio" name="precio" class="form-control" placeholder="Precio"
+                            aria-label="Precio" aria-describedby="basic-addon1" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faCheck"></fa-icon>
+                        </span>
+                        <select formControlName="estado"  name="estado" class="form-select" aria-label="Default select example">                            
+                            <option [ngValue]="true">True</option>
+                            <option [ngValue]="false">Falso</option> 
+                          </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cerrarEdit" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>                
+                <button type="button" (click)="updateProductDetails()" class="btn btn-primary">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<section style="margin-top: 50px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Sabor</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of productData | filter: filterTable">
+                            <td>{{row.id}}</td>
+                            <td>{{row.nombre}}</td>
+                            <td>{{row.categoria}}</td>
+                            <td>{{row.sabor}}</td>
+                            <td>{{row.precio}}</td>
+                            <td>{{row.estado}}</td>
+                            <td>
+                                <button type="button" (click)="onEdit(row)" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editarProducto">Editar</button>
+                                <button type="button" (click)="delProduct(row)" class="btn btn-danger mx-3">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
